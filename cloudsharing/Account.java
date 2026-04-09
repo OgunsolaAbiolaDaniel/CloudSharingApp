@@ -8,14 +8,24 @@ public interface Account {
     public String getEmail();
    /**
     * @return the name of the user
-    * */
+    */
     public String getName();
-    /*
+    /**
     * @return type of user
-    * */
+     */
     public  String getType();
-    public   void setEmail(String email);
+    /**
+     * @params email :
+     * set the email of the account
+     * */
+    public  void setEmail(String email);
+    /**
+     * @params name;
+     * set The name of the account;
+     * */
     public void setName(String name);
+    /**
+     * @params <code>type</code> : sets the type of the Account;
+     * */
     public void setType(String type);
-
 }

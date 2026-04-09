@@ -83,8 +83,7 @@ interface ArrayI{
 }
 
 interface IteratorI
-class ArrayIterator
-
+class ArrayIteratorClass
 
 }
 

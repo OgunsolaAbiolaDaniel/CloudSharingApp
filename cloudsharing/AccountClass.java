@@ -1,15 +1,14 @@
 package cloudsharing;
 
 public abstract class AccountClass implements Account{
-private String name;
-private String email;
-private String type;
+public String name;
+protected String email;
+protected String type;
 
 public AccountClass(String name, String email){
 this.name= name;
 this.email=email;
 }
-
     @Override
     public String getEmail() {
         return this.email;
@@ -39,6 +38,4 @@ this.email=email;
     public void setType(String type) {
         this.type = type;
     }
-
-
 }
