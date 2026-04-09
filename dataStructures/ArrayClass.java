@@ -122,9 +122,8 @@ public class ArrayClass<E> implements Array<E> {
      */
 	@SuppressWarnings("unchecked")
 	private void resize() {
-		E tmp[] = (E[]) new Object[FACTOR*elems.length];
-		for (int i=0;i<counter; i++)
-			tmp[i] = elems[i];
+		E[] tmp = (E[]) new Object[FACTOR*elems.length];
+        if (counter >= 0) System.arraycopy(elems, 0, tmp, 0, counter);
 		elems = tmp;
 	}
 }
