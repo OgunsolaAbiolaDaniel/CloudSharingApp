@@ -62,9 +62,10 @@ public class Main {
         String name, type;
         name = in.nextLine();
         type = in.next();
-        if(CloudSharingApp.hasuser()){
-
+        if(!CloudSharingApp.hasuser()){
+            CloudSharingApp.
         }
+        System.out.println(ACCT_EXISTS);
 
 
     };

@@ -1,0 +1,92 @@
+@startuml
+'https://plantuml.com/class-diagram
+class Main{
+-CloudSharing cloudSharing;
++ CloudSharingapp();
+}
+
+package "cloudSharing"{
+class CloudSharingClass{
+- users: Array<Account>
+}
+
+interface CloudSharingI{
++addAccount(String,String):void
++addFile(String, String ,int):void
++shareFile (String,String , String): void
++void ListFiles(String):iterator <File>
+}
+interface AccountI {
++getEmail(): String;
++getName(): String;
++getCapacity():int;
++setName(String);
++setCapacity(int);
++setEmail(String);
++addFile(String);
+}
+
+abstract class AccountClass{
+-String email;
+-int size;
+-int capacity;
+-files: Array<Files>;
+}
+class BasicClass{
+
+}
+class PremiumClass{
+- int sharedSize;
+}
+interface FileI{
++getName():String;
++getSize():String;
++getOwner():String;
++checkShareable():boolean;
+}
+class FileClass{
+-String name;
+-String size;
+-String owner;
+}
+
+Main-->CloudSharingI
+CloudSharingClass <|..CloudSharingI
+CloudSharingI --> "dataStructures"
+AccountClass<|.. AccountI
+BasicClass <|-- AccountClass
+BasicClass <|..AccountI
+PremiumClass<|.. AccountI
+PremiumClass<|--AccountClass
+CloudSharingClass o-- AccountI
+FileClass<|..FileI
+
+package "dataStructures"{
+
+class ArrayClass{
+-int FACTOR;
+-int NOT_FOUND;
+-MAX_ELEMS;
++ArrayClass();
+}
+
+interface ArrayI{
++void insertAt(E e, int pos):void;
++removeLast():void;
++removeAt(int pos): void ;
++searchForward(E e):boolean;
++searchBackward(E e):boolean;
++int searchIndexOf(E e):int;
++get(int pos): E;
++size():int;
++iterator():Iterator<E>;
+}
+
+interface IteratorI
+class ArrayIterator
+
+
+}
+
+
+@enduml
