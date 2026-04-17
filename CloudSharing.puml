@@ -1,92 +1,112 @@
 @startuml
-'https://plantuml.com/class-diagram
-class Main{
--CloudSharing cloudSharing;
-+ CloudSharingapp();
+skinparam classAttributeIconSize 0
+
+class Main
+
+package cloudsharing {
+  interface CloudSharing {
+    +addAccount(email: String, type: AccountType): Result
+    +upload(email: String, filename: String, fileSizeMb: int): Result
+    +share(ownerEmail: String, receiverEmail: String, filename: String): Result
+    +getAccount(email: String): Account
+    +accounts(): Iterator<Account>
+  }
+
+  enum AccountType {
+    BASIC
+    PREMIUM
+  }
+
+  enum Result {
+    SUCCESS
+    ACCOUNT_EXISTS
+    ACCOUNT_NOT_FOUND
+    FILE_EXISTS
+    FILE_NOT_FOUND
+    SHARING_NOT_ALLOWED
+    FILE_ALREADY_SHARED
+    EXCEEDS_CAPACITY
+  }
+
+  class CloudSharingClass {
+    -accounts: Array<Account>
+  }
+
+  interface Account {
+    +getEmail(): String
+    +getTypeLabel(): String
+    +canShareFiles(): boolean
+    +hasOwnedFile(fileName: String): boolean
+    +getOwnedFile(fileName: String): FileI
+    +hasSharedCopy(ownerEmail: String, fileName: String): boolean
+    +canStoreOwnedFile(fileSizeMb: int): boolean
+    +canStoreSharedFile(fileSizeMb: int): boolean
+    +addOwnedFile(fileName: String, fileSizeMb: int): void
+    +addSharedFile(file: FileI): void
+    +ownedFiles(): Iterator<FileI>
+    +sharedFiles(): Iterator<FileI>
+  }
+
+  abstract class AccountClass {
+    -email: String
+    -capacityMb: int
+    -ownedFiles: Array<FileI>
+    -sharedFiles: Array<FileI>
+    -ownedSpaceMb: int
+    -sharedSpaceMb: int
+  }
+
+  class BasicAccount {
+    -BASIC_CAPACITY_MB: int
+  }
+
+  class PremiumAccount {
+    -PREMIUM_CAPACITY_MB: int
+  }
+
+  interface FileI {
+    +getName(): String
+    +getFileSizeMb(): int
+    +getOwnerEmail(): String
+    +isShared(): boolean
+  }
+
+  class File {
+    -name: String
+    -sizeMb: int
+    -ownerEmail: String
+    -shared: boolean
+  }
 }
 
-package "cloudSharing"{
-class CloudSharingClass{
-- users: Array<Account>
+package dataStructures {
+  interface Array<E>
+  class ArrayClass<E>
+  interface Iterator<E>
+  class ArrayIteratorClass<E>
 }
 
-interface CloudSharingI{
-+addAccount(String,String):void
-+addFile(String, String ,int):void
-+shareFile (String,String , String): void
-+void ListFiles(String):iterator <File>
-}
-interface AccountI {
-+getEmail(): String;
-+getName(): String;
-+getCapacity():int;
-+setName(String);
-+setCapacity(int);
-+setEmail(String);
-+addFile(String);
-}
+Main --> CloudSharing
+Main ..> CloudSharingClass
 
-abstract class AccountClass{
--String email;
--int size;
--int capacity;
--files: Array<Files>;
-}
-class BasicClass{
+CloudSharingClass ..|> CloudSharing
+CloudSharing ..> AccountType
+CloudSharing ..> Result
+CloudSharingClass o-- Account
 
-}
-class PremiumClass{
-- int sharedSize;
-}
-interface FileI{
-+getName():String;
-+getSize():String;
-+getOwner():String;
-+checkShareable():boolean;
-}
-class FileClass{
--String name;
--String size;
--String owner;
-}
+AccountClass ..|> Account
+BasicAccount --|> AccountClass
+PremiumAccount --|> AccountClass
 
-Main-->CloudSharingI
-CloudSharingClass <|..CloudSharingI
-CloudSharingI --> "dataStructures"
-AccountClass<|.. AccountI
-BasicClass <|-- AccountClass
-BasicClass <|..AccountI
-PremiumClass<|.. AccountI
-PremiumClass<|--AccountClass
-CloudSharingClass o-- AccountI
-FileClass<|..FileI
+File ..|> FileI
+Account ..> FileI
 
-package "dataStructures"{
+ArrayClass ..|> Array
+ArrayIteratorClass ..|> Iterator
 
-class ArrayClass{
--int FACTOR;
--int NOT_FOUND;
--MAX_ELEMS;
-+ArrayClass();
-}
-
-interface ArrayI{
-+void insertAt(E e, int pos):void;
-+removeLast():void;
-+removeAt(int pos): void ;
-+searchForward(E e):boolean;
-+searchBackward(E e):boolean;
-+int searchIndexOf(E e):int;
-+get(int pos): E;
-+size():int;
-+iterator():Iterator<E>;
-}
-
-interface IteratorI
-class ArrayIterator
-
-
-}
-
+CloudSharingClass ..> Array
+AccountClass ..> Array
+CloudSharingClass ..> Iterator
+AccountClass ..> Iterator
 
 @enduml

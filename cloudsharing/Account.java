@@ -1,21 +1,29 @@
 package cloudsharing;
 
+import dataStructures.Iterator;
+
 public interface Account {
+    String getEmail();
 
-    /**
-     * @return the email of the user
-     * */
-    public String getEmail();
-   /**
-    * @return the name of the user
-    * */
-    public String getName();
-    /*
-    * @return type of user
-    * */
-    public  String getType();
-    public   void setEmail(String email);
-    public void setName(String name);
-    public void setType(String type);
+    String getTypeLabel();
 
+    boolean canShareFiles();
+
+    boolean hasOwnedFile(String fileName);
+
+    FileI getOwnedFile(String fileName);
+
+    boolean hasSharedCopy(String ownerEmail, String fileName);
+
+    boolean canStoreOwnedFile(int fileSizeMb);
+
+    boolean canStoreSharedFile(int fileSizeMb);
+
+    void addOwnedFile(String fileName, int fileSizeMb);
+
+    void addSharedFile(FileI file);
+
+    Iterator<FileI> ownedFiles();
+
+    Iterator<FileI> sharedFiles();
 }
