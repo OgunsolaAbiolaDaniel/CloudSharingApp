@@ -1,20 +1,35 @@
 package cloudsharing;
 
-import static cloudsharing.CloudSharing.AccountType.*;
+public class File implements FileI {
+    private final String name;
+    private final int sizeMb;
+    private final String ownerEmail;
+    private final boolean shared;
 
-public class File {
-enum{
-    BASIC, PREMIUM ;
-    }
-    private String name;
-    private String size;
-    private String ownerType;
-    private String ownerName;
-    private boolean shareable;
-
-    public File(String name, String ownerName,String ownerType){
+    public File(String name, int sizeMb, String ownerEmail, boolean shared) {
         this.name = name;
-        this.ownerName=ownerName;
-        this.ownerType= ownerType;
+        this.sizeMb = sizeMb;
+        this.ownerEmail = ownerEmail;
+        this.shared = shared;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getFileSizeMb() {
+        return sizeMb;
+    }
+
+    @Override
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    @Override
+    public boolean isShared() {
+        return shared;
     }
 }

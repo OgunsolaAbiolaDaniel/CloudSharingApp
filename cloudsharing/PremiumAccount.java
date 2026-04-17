@@ -1,9 +1,19 @@
 package cloudsharing;
 
-public class PremiumAccount extends AccountClass implements Account{
+public class PremiumAccount extends AccountClass {
+    private static final int PREMIUM_CAPACITY_MB = 5 * 1024;
 
+    public PremiumAccount(String email) {
+        super(email, PREMIUM_CAPACITY_MB);
+    }
 
-    public PremiumAccount(String name, String email){
-        super(name,email);
+    @Override
+    public String getTypeLabel() {
+        return "Premium";
+    }
+
+    @Override
+    public boolean canShareFiles() {
+        return true;
     }
 }
